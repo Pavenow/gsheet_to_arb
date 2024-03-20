@@ -17,11 +17,6 @@ class PluginConfigManager {
     final pubspec = YamlUtils.load(configFileName);
     final config = PluginConfigRoot.fromJson(pubspec).content;
 
-    if (config != null) {
-      config.generateCode = config.generateCode ?? true;
-      config.addContextPrefix = config.addContextPrefix ?? false;
-    }
-
     if (config!.gsheet!.authFile != null) {
       if (!FileUtils.exists(config.gsheet!.authFile!)) {
         return null;
@@ -30,6 +25,9 @@ class PluginConfigManager {
       final authConfig = YamlUtils.load(config.gsheet!.authFile!);
       config.gsheet!.auth = AuthConfig.fromJson(authConfig);
     }
+
+    config.generateCode = config.generateCode ?? true;
+    config.addContextPrefix = config.addContextPrefix ?? false;
 
     return config;
   }
