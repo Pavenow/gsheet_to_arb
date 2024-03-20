@@ -46,7 +46,7 @@ class GSheetImporter {
     } else if (auth.serviceAccountKey != null) {
       final service = auth.serviceAccountKey;
       var credentials = ServiceAccountCredentials(service!.clientEmail!,
-          ClientId(service.clientId!, null), service.privateKey!);
+          ClientId(service.clientId!), service.privateKey!);
       authClient = await clientViaServiceAccount(credentials, scopes);
     }
     return authClient;

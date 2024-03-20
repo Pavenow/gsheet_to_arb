@@ -17,20 +17,18 @@ import 'package:path/path.dart' as path;
 import '../../gsheet_to_arb.dart';
 
 class IntlTranslationGenerator {
-  void generateLookupTables(
+  Future<void> generateLookupTables(
     String arbDirectoryPath,
     String outputDirectoryPath,
     String localizationFileName,
-  ) {
+  ) async {
     var extraction = MessageExtraction();
     var generation = MessageGeneration();
 
     // generation.codegenMode = 'release';
     generation.generatedFilePrefix = "";
 
-    var dartFiles = [
-      '${outputDirectoryPath}/${localizationFileName.toLowerCase()}.dart'
-    ];
+    var dartFiles = ['${outputDirectoryPath}/l10n.dart'];
 
     var jsonFiles = Directory(arbDirectoryPath)
         .listSync()
@@ -120,5 +118,5 @@ class BasicTranslatedMessage extends TranslatedMessage {
       : super(name, translated, []);
 
   @override
-  List<MainMessage> get originalMessages => super.originalMessages;
+  List<MainMessage> get originalMessages => messages[id] ?? [];
 }

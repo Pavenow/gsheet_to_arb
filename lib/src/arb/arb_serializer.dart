@@ -11,13 +11,13 @@ import 'arb.dart';
 
 class ArbSerializer {
   String serialize(ArbDocument document) {
-    var encoder = JsonEncoder.withIndent('  ');
+    var encoder = const JsonEncoder.withIndent('  ');
     var arbContent = encoder.convert(document.toJson());
     return arbContent;
   }
 
   ArbDocument deserialize(String json) {
-    final decoder = JsonDecoder();
+    const decoder = JsonDecoder();
     final arbContent = ArbDocument.fromJson(decoder.convert(json));
     return arbContent;
   }

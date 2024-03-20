@@ -6,10 +6,10 @@ import 'generated/l10n.dart';
 void main() async {
   print('MAIN');
 
-  Intl.defaultLocale = 'pl';
+  Intl.defaultLocale = 'id';
   await initializeMessages(Intl.defaultLocale);
 
-  final l10n = L10n();
+  final l10n = ExampleLang();
 
   print(l10n.title);
   print(l10n.login);

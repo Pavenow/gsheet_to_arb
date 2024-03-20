@@ -52,7 +52,7 @@ class TranslationParser {
         final itemPlaceholders = _findPlaceholders(itemValue);
 
         final builder = builders[index as int];
-        final parser = parsers[index as int];
+        final parser = parsers[index];
 
         // plural consume
         final status = parser.consume(ArbResource(item.key, itemValue,
@@ -88,7 +88,7 @@ class TranslationParser {
     // finalizer
     for (var index in iterables.range(0, document.languages.length - 1)) {
       final builder = builders[index as int];
-      final parser = parsers[index as int];
+      final parser = parsers[index];
       final status = parser.complete();
       if (status is Completed) {
         builder.add(status.resource);

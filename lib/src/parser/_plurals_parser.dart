@@ -143,7 +143,7 @@ class PluralsParser {
   }
 }
 
-final String _countPlaceholder = 'count';
+const String _countPlaceholder = 'count';
 
 class PluralsFormatter {
   static final _icuPluralFormats = {

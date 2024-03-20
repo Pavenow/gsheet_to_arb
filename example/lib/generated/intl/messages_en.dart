@@ -21,7 +21,7 @@ class MessageLookup extends MessageLookupByLibrary {
   @override
   String get localeName => 'en';
 
-  static m0(count) => "${Intl.plural(count, one: '${count} Canadian dollar', other: '${count} Canadian dollars')}";
+  static m0(count) => "${Intl.plural(count, one: '${count} Indonesian Rupiah', other: '${count} Indonesian Rupiah')}";
 
   static m1(count) => "${Intl.plural(count, zero: 'No songs found.', one: 'One song found.', two: '${count} songs found.', few: '${count} songs found.', many: '${count} songs found.', other: '${count} song found.')}";
 
@@ -33,7 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
 
   static Map<String, dynamic> _notInlinedMessages(_) => {
-      'amountDollars': m0,
+      'amountRupiah': m0,
     'appName': MessageLookupByLibrary.simpleMessage('Sample Application'),
     'login': MessageLookupByLibrary.simpleMessage('Login'),
     'longText': MessageLookupByLibrary.simpleMessage('line a\nline b\nline c\nlorem\nipsum'),

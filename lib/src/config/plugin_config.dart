@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 /*
  * Copyright (c) 2024, Rahmatur Ramadhan
  * All rights reserved. Use of this source code is governed by a

@@ -5,6 +5,8 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
+  flutter:
+    sdk: flutter
   intl: ^0.18.1
   intl_translation: ^0.18.2
   intl_utils: ^2.8.4
@@ -17,13 +19,13 @@ dev_dependencies:
   
 gsheet_to_arb: 
   arb_file_prefix: 'intl'
-  localization_file_name: 'l10n'
+  localization_file_name: 'ExampleLang'
   arb_dir: lib/l10n
   output_dir: lib/generated
   generate_code: true
   add_context_prefix: false
   gsheet: 
-    auth_file: './gsheet_to_arb.yaml'
+    auth_file: './credentials.yaml'
     category_prefix: "# "
-    document_id: '15umdtiw2rdUEon5YEh473oG0q51B614S9bDpwDFjOUk'
+    document_id: '1-W-OuH3GR1rSkLqN_-iwMe8yGQbjVyRHhWueKjVWT5E'
     sheet_id: '0'

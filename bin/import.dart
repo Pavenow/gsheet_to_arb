@@ -56,7 +56,7 @@ void main(List<String> args) async {
 }
 
 void _checkAuthConfig(GoogleSheetConfig config) {
-  final placeholder = 'TODO';
+  const placeholder = 'TODO';
 
   if (config.auth == null) {
     Log.i(

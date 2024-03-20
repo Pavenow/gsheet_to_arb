@@ -1,7 +1,55 @@
-import 'package:intl/intl.dart';
+// GENERATED CODE - DO NOT MODIFY BY HAND
 
-//ignore_for_file: type_annotate_public_apis, non_constant_identifier_names
-class L10n {
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'intl/messages_all.dart';
+
+// **************************************************************************
+// Generator: Flutter Intl IDE plugin
+// Made by aut0run
+// **************************************************************************
+
+// ignore_for_file: non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: join_return_with_assignment, prefer_final_in_for_each
+// ignore_for_file: avoid_redundant_argument_values, avoid_escaping_inner_quotes
+
+class ExampleLang {
+  ExampleLang();
+
+  static ExampleLang? _current;
+
+  static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
+
+  static ExampleLang get current {
+    assert(_current != null,
+        'No instance of ExampleLang was loaded. Try to initialize the ExampleLang delegate before accessing ExampleLang.current.');
+    return _current!;
+  }
+
+  static Future<ExampleLang> load(Locale locale) {
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
+    final localeName = Intl.canonicalizedLocale(name);
+    return initializeMessages(localeName).then((_) {
+      Intl.defaultLocale = localeName;
+      final instance = ExampleLang();
+      ExampleLang._current = instance;
+      return instance;
+    });
+  }
+
+  static ExampleLang of(BuildContext context) {
+    final instance = ExampleLang.maybeOf(context);
+    assert(instance != null,
+        'No instance of ExampleLang present in the widget tree. Did you add ExampleLang.delegate in localizationsDelegates?');
+    return instance!;
+  }
+
+  static ExampleLang? maybeOf(BuildContext context) {
+    return Localizations.of<ExampleLang>(context, ExampleLang);
+  }
+
   /// contains title
   String get title =>
       Intl.message('Title', name: 'title', desc: 'contains title');
@@ -29,12 +77,12 @@ class L10n {
       args: [count],
       desc: 'number of songs plural');
 
-  /// currency dolars
-  String amountDollars(int count) => Intl.message(
-      '{count, plural, =1 {$count Canadian dollar} other {$count Canadian dollars}}',
-      name: 'amountDollars',
+  /// currency rupiah
+  String amountRupiah(int count) => Intl.message(
+      '{count, plural, =1 {$count Indonesian Rupiah} other {$count Indonesian Rupiah}}',
+      name: 'amountRupiah',
       args: [count],
-      desc: 'currency dolars');
+      desc: 'currency rupiah');
 
   /// test special characters
   String get specialCharacters => Intl.message('special: !@#\$%^&*()',
@@ -61,4 +109,34 @@ class L10n {
   /// line
   String get longText => Intl.message('line a\nline b\nline c\nlorem\nipsum',
       name: 'longText', desc: 'long\ndescription\n\nnew\nline');
+}
+
+class AppLocalizationDelegate extends LocalizationsDelegate<ExampleLang> {
+  const AppLocalizationDelegate();
+
+  List<Locale> get supportedLocales {
+    return const <Locale>[
+      Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'id'),
+      Locale.fromSubtags(languageCode: 'pl'),
+    ];
+  }
+
+  @override
+  bool isSupported(Locale locale) => _isSupported(locale);
+
+  @override
+  Future<ExampleLang> load(Locale locale) => ExampleLang.load(locale);
+
+  @override
+  bool shouldReload(AppLocalizationDelegate old) => false;
+
+  bool _isSupported(Locale locale) {
+    for (var supportedLocale in supportedLocales) {
+      if (supportedLocale.languageCode == locale.languageCode) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

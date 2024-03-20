@@ -1,37 +1,37 @@
 {
-  "@@locale": "en_US",
-  "@@last_modified": "2024-03-20T20:39:09.352133",
-  "title": "Title",
+  "@@locale": "id",
+  "@@last_modified": "2024-03-21T03:08:05.837121",
+  "title": "Judul",
   "@title": {
     "type": "Text",
     "description": "contains title",
     "context": "common"
   },
-  "message": "Message",
+  "message": "Pesan",
   "@message": {
     "type": "Text",
     "description": "contains message",
     "context": "common"
   },
-  "appName": "Sample Application",
+  "appName": "Contoh Aplikasi",
   "@appName": {
     "type": "Text",
     "description": "contains app name",
     "context": "common"
   },
-  "login": "Login",
+  "login": "Masuk",
   "@login": {
     "type": "Text",
     "description": "contains login",
     "context": "login"
   },
-  "register": "Register",
+  "register": "Daftar",
   "@register": {
     "type": "Text",
     "description": "contains registration",
     "context": "signup"
   },
-  "numberOfSongsAvailable": "{count, plural, =0 {No songs found.} =1 {One song found.} =2 {{count} songs found.} few {{count} songs found.} many {{count} songs found.} other {{count} song found.}}",
+  "numberOfSongsAvailable": "{count, plural, =0 {Tidak ada lagu yang ditemukan.} =1 {Satu lagu ditemukan.} =2 {{count} lagu ditemukan.} few {{count} lagu ditemukan.} many {{count} lagu ditemukan.} other {{count} lagu ditemukan.}}",
   "@numberOfSongsAvailable": {
     "type": "Text",
     "placeholders": {
@@ -42,24 +42,24 @@
     "description": "number of songs plural",
     "context": "plurals"
   },
-  "amountDollars": "{count, plural, =1 {{count} Canadian dollar} other {{count} Canadian dollars}}",
-  "@amountDollars": {
+  "amountRupiah": "{count, plural, =1 {{count} Rupiah Indonesia} other {{count} Rupiah Indonesia}}",
+  "@amountRupiah": {
     "type": "Text",
     "placeholders": {
       "count": {
         "type": "num"
       }
     },
-    "description": "currency dolars",
+    "description": "currency rupiah",
     "context": "plurals"
   },
-  "specialCharacters": "special: !@#$%^&*()",
+  "specialCharacters": "spesial: !@#$%^&*()",
   "@specialCharacters": {
     "type": "Text",
     "description": "test special characters",
     "context": "plurals"
   },
-  "singleArgument": "Single {name} argument",
+  "singleArgument": "Satu {name} argumen",
   "@singleArgument": {
     "type": "Text",
     "placeholders": {
@@ -70,7 +70,7 @@
     "description": "Single named argument",
     "context": "placeholders"
   },
-  "twoArguments": "Argument {first} and {second}",
+  "twoArguments": "Argumen {first} dan {second}",
   "@twoArguments": {
     "type": "Text",
     "placeholders": {
@@ -84,7 +84,7 @@
     "description": "Two named arguments",
     "context": "placeholders"
   },
-  "longText": "line a\nline b\nline c\nlorem\nipsum",
+  "longText": "garis a\ngaris b\ngaris c\nlorem\nipsum",
   "@longText": {
     "type": "Text",
     "description": "long\ndescription\n\nnew\nline",

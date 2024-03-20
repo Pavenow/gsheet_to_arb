@@ -46,7 +46,7 @@ class CustomIcuParser {
   Parser get plural =>
       preface & pluralLiteral & comma & pluralClause.plus() & closeCurly;
   Parser get intlPlural =>
-      plural.map((values) => Plural.from(values.first, values[3], null));
+      plural.map((values) => Plural.from(values.first, values[3]));
 
   Parser get selectLiteral => string('select');
   Parser get genderClause =>
@@ -56,13 +56,13 @@ class CustomIcuParser {
   Parser get gender =>
       preface & selectLiteral & comma & genderClause.plus() & closeCurly;
   Parser get intlGender =>
-      gender.map((values) => Gender.from(values.first, values[3], null));
+      gender.map((values) => Gender.from(values.first, values[3]));
   Parser get selectClause =>
       (id & openCurly & interiorText & closeCurly).map((x) => [x.first, x[2]]);
   Parser get generalSelect =>
       preface & selectLiteral & comma & selectClause.plus() & closeCurly;
   Parser get intlSelect =>
-      generalSelect.map((values) => Select.from(values.first, values[3], null));
+      generalSelect.map((values) => Select.from(values.first, values[3]));
 
   Parser get pluralOrGenderOrSelect => intlPlural | intlGender | intlSelect;
 
@@ -75,16 +75,16 @@ class CustomIcuParser {
 
   /// The primary entry point for parsing. Accepts a string and produces
   /// a parsed representation of it as a Message.
-  Parser get message => (pluralOrGenderOrSelect | empty)
-      .map((chunk) => Message.from(chunk, null));
+  Parser get message =>
+      (pluralOrGenderOrSelect | empty).map((chunk) => Message.from(chunk));
 
   /// Represents an ordinary message, i.e. not a plural/gender/select, although
   /// it may have parameters.
   Parser get nonIcuMessage =>
-      (simpleText | empty).map((chunk) => Message.from(chunk, null));
+      (simpleText | empty).map((chunk) => Message.from(chunk));
 
-  Parser get stuff => (pluralOrGenderOrSelect | empty)
-      .map((chunk) => Message.from(chunk, null));
+  Parser get stuff =>
+      (pluralOrGenderOrSelect | empty).map((chunk) => Message.from(chunk));
 
   IcuParser() {
     // There is a cycle here, so we need the explicit set to avoid

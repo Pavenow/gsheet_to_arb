@@ -10,7 +10,6 @@ import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import '../arb/arb.dart';
 import '../utils/log.dart';
-import 'package:recase/recase.dart';
 import '_icu_parser.dart';
 import '_intl_translation_generator.dart';
 import 'package:intl_translation/src/messages/message.dart';
@@ -19,6 +18,8 @@ import 'package:intl_translation/src/messages/submessages/plural.dart';
 import 'package:intl_translation/src/messages/composite_message.dart';
 
 import 'package:petitparser/petitparser.dart';
+
+import 'templates.dart';
 
 class ArbToDartGenerator {
   final intlTranslation = IntlTranslationGenerator();
@@ -32,7 +33,8 @@ class ArbToDartGenerator {
   }) {
     Log.i('Genrating Dart classes from ARB...');
     Log.startTimeTracking();
-    _buildIntlListFile(bundle.documents.first, outputDirectoryPath, className);
+
+    _buildIntlListFile(bundle, outputDirectoryPath, className);
 
     intlTranslation.generateLookupTables(
       arbDirectoryPath,
@@ -44,27 +46,40 @@ class ArbToDartGenerator {
   }
 
   void _buildIntlListFile(
-      ArbDocument document, String directory, String className) {
+      ArbBundle bundle, String directory, String className) {
     var translationClass = Class((ClassBuilder builder) {
-      builder.name = ReCase(className).pascalCase;
-      builder.docs.add(
-          '\n//ignore_for_file: type_annotate_public_apis, non_constant_identifier_names');
-      document.entries!.forEach((ArbResource entry) {
+      langTemplates(builder, className);
+      bundle.documents.first.entries!.forEach((ArbResource entry) {
         var method = _getResourceMethod(entry);
         builder.methods.add(method);
       });
     });
+    var delegateClass = Class(
+      (ClassBuilder builder) => delegateTemplates(
+        builder,
+        bundle.documents.map((e) => e.locale!).toList(),
+        className,
+      ),
+    );
 
     final library = Library((LibraryBuilder builder) {
-      builder.directives.add(Directive.import('package:intl/intl.dart'));
-      builder.body.add(translationClass);
+      builder.comments.add("GENERATED CODE - DO NOT MODIFY BY HAND");
+      builder.directives.addAll([
+        Directive.import('package:flutter/material.dart'),
+        Directive.import('package:intl/intl.dart'),
+        Directive.import('intl/messages_all.dart')
+      ]);
+      builder.body.addAll([
+        translationClass,
+        delegateClass,
+      ]);
     });
 
     final emitter = DartEmitter(allocator: Allocator.simplePrefixing());
     final emitted = library.accept(emitter);
     final formatted = DartFormatter().format('${emitted}');
 
-    final file = File('${directory}/${className.toLowerCase()}.dart');
+    final file = File('${directory}/l10n.dart');
     file.createSync();
     file.writeAsStringSync(formatted);
   }

@@ -8,7 +8,7 @@ import '../../gsheet_to_arb.dart';
 import '../utils/file_utils.dart';
 import '../utils/yaml_utils.dart';
 
-const authFileName = 'gsheet_to_arb.yaml';
+const authFileName = 'credentials.yaml';
 const configFileName = 'pubspec.yaml';
 const _gitignore = '.gitignore';
 
@@ -79,7 +79,7 @@ class PluginConfigManager {
       Log.i('Auth config has been added to the $authFileName');
       Log.i('More info:');
       Log.i(
-          'https://github.com/gocal/gsheet_to_arb/blob/develop/doc/Authentication.md');
+          'https://github.com/rahmat412/gsheet_to_arb/blob/develop/doc/Authentication.md');
     }
     _checkAuthIgonre(authFileName);
   }

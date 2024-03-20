@@ -1,6 +1,6 @@
 {
   "@@locale": "pl",
-  "@@last_modified": "2024-03-20T20:39:09.352133",
+  "@@last_modified": "2024-03-21T03:08:05.837121",
   "title": "Tytuł",
   "@title": {
     "type": "Text",
@@ -42,15 +42,15 @@
     "description": "number of songs plural",
     "context": "plurals"
   },
-  "amountDollars": "{count, plural, =1 {{count} dolar kanadyjski} other {{count} dolarów kanadyjskich}}",
-  "@amountDollars": {
+  "amountRupiah": "{count, plural, =1 {{count} Rupia Indonezyjski} other {{count} Rupia Indonezyjski}}",
+  "@amountRupiah": {
     "type": "Text",
     "placeholders": {
       "count": {
         "type": "num"
       }
     },
-    "description": "currency dolars",
+    "description": "currency rupiah",
     "context": "plurals"
   },
   "specialCharacters": "special: ąęśćż",
