@@ -71,15 +71,21 @@ class ExampleLang {
       Intl.message('Register', name: 'register', desc: 'contains registration');
 
   /// number of songs plural
-  String numberOfSongsAvailable(int count) => Intl.message(
-      '{count, plural, =0 {No songs found.} =1 {One song found.} =2 {$count songs found.} few {$count songs found.} many {$count songs found.} other {$count song found.}}',
+  String numberOfSongsAvailable(int count) => Intl.plural(count,
+      zero: 'No songs found.',
+      one: 'One song found.',
+      two: ' songs found.',
+      few: ' songs found.',
+      other: ' song found.',
+      many: ' songs found.',
       name: 'numberOfSongsAvailable',
       args: [count],
       desc: 'number of songs plural');
 
   /// currency rupiah
-  String amountRupiah(int count) => Intl.message(
-      '{count, plural, =1 {$count Indonesian Rupiah} other {$count Indonesian Rupiah}}',
+  String amountRupiah(int count) => Intl.plural(count,
+      one: ' Indonesian Rupiah',
+      other: ' Indonesian Rupiah',
       name: 'amountRupiah',
       args: [count],
       desc: 'currency rupiah');
@@ -89,7 +95,7 @@ class ExampleLang {
       name: 'specialCharacters', desc: 'test special characters');
 
   /// Single named argument
-  String singleArgument(String name) => Intl.message('Single $name argument',
+  String singleArgument(String name) => Intl.message('Single  argument',
       name: 'singleArgument', args: [name], desc: 'Single named argument');
 
   /// Two named arguments
@@ -97,7 +103,7 @@ class ExampleLang {
     String first,
     String second,
   ) =>
-      Intl.message('Argument $first and $second',
+      Intl.message('Argument  and ',
           name: 'twoArguments',
           args: [first, second],
           desc: 'Two named arguments');
@@ -109,6 +115,9 @@ class ExampleLang {
   /// line
   String get longText => Intl.message('line a\nline b\nline c\nlorem\nipsum',
       name: 'longText', desc: 'long\ndescription\n\nnew\nline');
+
+  /// greetings
+  String get greet => Intl.message('hallo', name: 'greet', desc: 'greetings');
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<ExampleLang> {

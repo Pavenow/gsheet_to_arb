@@ -1,3 +1,5 @@
+// ignore_for_file: implementation_imports
+
 /*
  * Copyright (c) 2024, Rahmatur Ramadhan
  * All rights reserved. Use of this source code is governed by a
@@ -7,11 +9,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:intl_translation/extract_messages.dart';
-import 'package:intl_translation/generate_localized.dart';
-import 'package:intl_translation/src/message_parser.dart';
-import 'package:intl_translation/src/messages/main_message.dart';
-import 'package:intl_translation/src/messages/literal_string_message.dart';
+// import 'package:intl_translation/src/message_parser.dart';
+// import 'package:intl_translation/src/messages/main_message.dart';
+// import 'package:intl_translation/src/messages/literal_string_message.dart';
+import '_generate_localized.dart';
+import '_intl_message.dart';
+import '_icu_parser.dart';
+import '_extract_messages.dart';
 import 'package:path/path.dart' as path;
 
 import '../../gsheet_to_arb.dart';
@@ -28,23 +32,23 @@ class IntlTranslationGenerator {
     // generation.codegenMode = 'release';
     generation.generatedFilePrefix = "";
 
-    var dartFiles = ['${outputDirectoryPath}/l10n.dart'];
+    var dartFiles = ['$outputDirectoryPath/l10n.dart'];
 
     var jsonFiles = Directory(arbDirectoryPath)
         .listSync()
         .where((file) => file.path.endsWith('.arb'))
         .map<String>((file) => file.path);
 
-    var targetDir = outputDirectoryPath + "/intl/";
+    var targetDir = "$outputDirectoryPath/intl/";
 
     extraction.suppressWarnings = true;
-    var allMessages = dartFiles.map((each) => extraction.parseFile(File(each)));
 
-    messages = {};
-    for (var eachMap in allMessages) {
-      eachMap.forEach(
+    var allMessages = dartFiles.map((file) => extraction.parseFile(File(file)));
+    for (var messageMap in allMessages) {
+      messageMap.forEach(
           (key, value) => messages.putIfAbsent(key, () => []).add(value));
     }
+
     for (var arg in jsonFiles) {
       var file = File(arg);
       generateLocaleFile(file, targetDir, generation);
@@ -52,12 +56,15 @@ class IntlTranslationGenerator {
 
     var mainImportFile = File(path.join(
         targetDir, '${generation.generatedFilePrefix}messages_all.dart'));
-    mainImportFile.writeAsStringSync(generation.generateLocalesImportFile());
+    mainImportFile.writeAsStringSync(generation.generateMainImportFile());
   }
 
   /// Keeps track of all the messages we have processed so far, keyed by message
   /// name.
   Map<String, List<MainMessage>> messages = {};
+
+  final pluralAndGenderParser = IcuParser().message;
+  final plainParser = IcuParser().nonIcuMessage;
 
   JsonCodec jsonDecoder = const JsonCodec();
 
@@ -87,6 +94,7 @@ class IntlTranslationGenerator {
     data.forEach((id, messageData) {
       TranslatedMessage? message = recreateIntlObjects(id, messageData);
       if (message != null) {
+        Log.i(message.toString());
         translations.add(message);
       }
     });
@@ -100,9 +108,9 @@ class IntlTranslationGenerator {
   BasicTranslatedMessage? recreateIntlObjects(String id, data) {
     if (id.startsWith('@')) return null;
     if (data == null) return null;
-    var parsed = MessageParser(data).pluralGenderSelectParse();
+    var parsed = pluralAndGenderParser.parse(data).value;
     if (parsed is LiteralString && parsed.string.isEmpty) {
-      parsed = MessageParser(data).nonIcuMessageParse();
+      parsed = plainParser.parse(data).value;
     }
     return BasicTranslatedMessage(id, parsed, messages);
   }
@@ -114,9 +122,13 @@ class IntlTranslationGenerator {
 class BasicTranslatedMessage extends TranslatedMessage {
   Map<String, List<MainMessage>> messages;
 
-  BasicTranslatedMessage(String name, translated, this.messages)
-      : super(name, translated, []);
+  BasicTranslatedMessage(super.name, super.translated, this.messages);
 
   @override
-  List<MainMessage> get originalMessages => messages[id] ?? [];
+  List<MainMessage>? get originalMessages => (super.originalMessages == null)
+      ? _findOriginals()
+      : super.originalMessages;
+
+  // We know that our [id] is the name of the message, which is used as the key in [messages].
+  List<MainMessage>? _findOriginals() => originalMessages = messages[id];
 }

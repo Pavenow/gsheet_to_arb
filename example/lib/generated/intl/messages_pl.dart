@@ -4,45 +4,47 @@
 // function name.
 
 // Ignore issues from commonly used lints in this file.
-// ignore_for_file:unnecessary_brace_in_string_interps
+// ignore_for_file:unnecessary_brace_in_string_interps, unnecessary_new
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
-// ignore_for_file:unused_import, file_names
+// ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
 
-final messages = MessageLookup();
+final messages = new MessageLookup();
 
-typedef String? MessageIfAbsent(
-    String? messageStr, List<Object>? args);
+typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  @override
   String get localeName => 'pl';
 
-  static m0(count) => "${Intl.plural(count, one: '${count} Rupia Indonezyjski', other: '${count} Rupia Indonezyjski')}";
+  static String m0(count) =>
+      "${Intl.plural(count, one: '${count} Rupia Indonezyjski', other: '${count} Rupia Indonezyjski')}";
 
-  static m1(count) => "${Intl.plural(count, zero: 'Nie znaleziono piosenek.', one: 'Znaleziono jedną piosenkę.', two: 'Znaleziono ${count} piosenki.', few: 'Znaleziono ${count} piosenek.', many: 'Znaleziono ${count} piosenek.', other: 'Znaleziono ${count} piosenek.')}";
+  static String m1(count) =>
+      "${Intl.plural(count, zero: 'Nie znaleziono piosenek.', one: 'Znaleziono jedną piosenkę.', two: 'Znaleziono ${count} piosenki.', few: 'Znaleziono ${count} piosenek.', many: 'Znaleziono ${count} piosenek.', other: 'Znaleziono ${count} piosenek.')}";
 
-  static m2(name) => "Pojedynczy argument  ${name} ";
+  static String m2(name) => "Pojedynczy argument  ${name} ";
 
-  static m3(first, second) => "Dwa argumenty: ${first} i ${second}";
+  static String m3(first, second) => "Dwa argumenty: ${first} i ${second}";
 
-  @override
-  final Map<String, dynamic> messages = _notInlinedMessages(_notInlinedMessages);
-
-  static Map<String, dynamic> _notInlinedMessages(_) => {
-      'amountRupiah': m0,
-    'appName': MessageLookupByLibrary.simpleMessage('Aplikacja'),
-    'login': MessageLookupByLibrary.simpleMessage('Zaloguj'),
-    'longText': MessageLookupByLibrary.simpleMessage('lina a\nlina b\nlina c\nlorem\nipsum'),
-    'message': MessageLookupByLibrary.simpleMessage('Wiadomość'),
-    'numberOfSongsAvailable': m1,
-    'register': MessageLookupByLibrary.simpleMessage('Zarejestruj'),
-    'singleArgument': m2,
-    'specialCharacters': MessageLookupByLibrary.simpleMessage('special: ąęśćż'),
-    'title': MessageLookupByLibrary.simpleMessage('Tytuł'),
-    'twoArguments': m3
-  };
+  final messages = _notInlinedMessages(_notInlinedMessages);
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "amountRupiah": m0,
+        "appName": MessageLookupByLibrary.simpleMessage("Aplikacja"),
+        "greet": MessageLookupByLibrary.simpleMessage("holla"),
+        "login": MessageLookupByLibrary.simpleMessage("Zaloguj"),
+        "longText": MessageLookupByLibrary.simpleMessage(
+            "lina a\nlina b\nlina c\nlorem\nipsum"),
+        "message": MessageLookupByLibrary.simpleMessage("Wiadomość"),
+        "numberOfSongsAvailable": m1,
+        "register": MessageLookupByLibrary.simpleMessage("Zarejestruj"),
+        "singleArgument": m2,
+        "specialCharacters":
+            MessageLookupByLibrary.simpleMessage("special: ąęśćż"),
+        "title": MessageLookupByLibrary.simpleMessage("Tytuł"),
+        "twoArguments": m3
+      };
 }

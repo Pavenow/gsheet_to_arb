@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2024-03-21T03:08:05.837121",
+  "@@last_modified": "2024-03-21T04:24:36.032954",
   "title": "Title",
   "@title": {
     "type": "Text",
@@ -88,6 +88,12 @@
   "@longText": {
     "type": "Text",
     "description": "long\ndescription\n\nnew\nline",
+    "context": "multiline"
+  },
+  "greet": "hallo",
+  "@greet": {
+    "type": "Text",
+    "description": "greetings",
     "context": "multiline"
   }
 }

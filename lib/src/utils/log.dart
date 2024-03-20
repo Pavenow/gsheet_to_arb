@@ -19,7 +19,7 @@ class Log {
 
   Log._internal() {
     Logger.root.onRecord.listen((LogRecord rec) {
-      print('${rec.message}');
+      print(rec.message);
     });
     verbose = false;
   }

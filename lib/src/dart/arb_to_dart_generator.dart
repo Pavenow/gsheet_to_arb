@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 /*
  * Copyright (c) 2024, Rahmatur Ramadhan
  * All rights reserved. Use of this source code is governed by a
@@ -11,11 +13,8 @@ import 'package:dart_style/dart_style.dart';
 import '../arb/arb.dart';
 import '../utils/log.dart';
 import '_icu_parser.dart';
+import '_intl_message.dart';
 import '_intl_translation_generator.dart';
-import 'package:intl_translation/src/messages/message.dart';
-import 'package:intl_translation/src/messages/literal_string_message.dart';
-import 'package:intl_translation/src/messages/submessages/plural.dart';
-import 'package:intl_translation/src/messages/composite_message.dart';
 
 import 'package:petitparser/petitparser.dart';
 
@@ -49,10 +48,10 @@ class ArbToDartGenerator {
       ArbBundle bundle, String directory, String className) {
     var translationClass = Class((ClassBuilder builder) {
       langTemplates(builder, className);
-      bundle.documents.first.entries!.forEach((ArbResource entry) {
+      for (var entry in bundle.documents.first.entries!) {
         var method = _getResourceMethod(entry);
         builder.methods.add(method);
-      });
+      }
     });
     var delegateClass = Class(
       (ClassBuilder builder) => delegateTemplates(
@@ -77,9 +76,9 @@ class ArbToDartGenerator {
 
     final emitter = DartEmitter(allocator: Allocator.simplePrefixing());
     final emitted = library.accept(emitter);
-    final formatted = DartFormatter().format('${emitted}');
+    final formatted = DartFormatter().format('$emitted');
 
-    final file = File('${directory}/l10n.dart');
+    final file = File('$directory/l10n.dart');
     file.createSync();
     file.writeAsStringSync(formatted);
   }
@@ -100,7 +99,7 @@ class ArbToDartGenerator {
         ..name = methodName
         ..returns = const Reference('String')
         ..lambda = true
-        ..docs.add('/// ${docs}');
+        ..docs.add('/// $docs');
 
       if (resource.placeholders.isNotEmpty) {
         return _getResourceFullMethod(resource, builder);
@@ -118,7 +117,7 @@ class ArbToDartGenerator {
         : (resource.attributes['description'] as String));
 
     var args = <String>[];
-    resource.placeholders.forEach((ArbResourcePlaceholder placeholder) {
+    for (var placeholder in resource.placeholders) {
       builder.requiredParameters.add(Parameter((ParameterBuilder builder) {
         args.add(placeholder.name!);
         final argumentType = placeholder.type == ArbResourcePlaceholder.typeNum
@@ -128,11 +127,9 @@ class ArbToDartGenerator {
           ..name = placeholder.name!
           ..type = Reference(argumentType);
       }));
-    });
-
-    builder
-      ..body = Code(
-          _getCode(value!, key: key, args: args, description: description!));
+    }
+    builder.body =
+        Code(_getCode(value!, key: key, args: args, description: description!));
   }
 
   void _getResourceGetter(ArbResource resource, MethodBuilder builder) {
@@ -145,14 +142,14 @@ class ArbToDartGenerator {
     builder
       ..type = MethodType.getter
       ..body = Code(
-          '''Intl.message('${value}', name: '${key}', desc: '${description}')''');
+          '''Intl.message('$value', name: '$key', desc: '$description')''');
   }
 
   ///
   /// intl_translation
   ///
-  final Parser<dynamic> _pluralParser = CustomIcuParser().message;
-  final Parser<dynamic> _plainParser = CustomIcuParser().nonIcuMessage;
+  final Parser<dynamic> _pluralParser = IcuParser().message;
+  final Parser<dynamic> _plainParser = IcuParser().nonIcuMessage;
 
   String _getCode(String value,
       {required String key, required String description, required List args}) {
@@ -178,13 +175,13 @@ class ArbToDartGenerator {
       addIfNotNull('many', message.many);
 
       pluralBuilder.write(
-        'name: \'${key}\',',
+        'name: \'$key\',',
       );
       pluralBuilder.write(
         'args: [${args.join(", ")}],',
       );
       pluralBuilder.write(
-        'desc: \'${description}\'',
+        'desc: \'$description\'',
       );
       pluralBuilder.write(')');
 
@@ -193,7 +190,7 @@ class ArbToDartGenerator {
       return code;
     }
     final code = _getMessageCode(message);
-    return """Intl.message('${code}', name: '$key', args: [${args.join(", ")}], desc: '${description}')""";
+    return """Intl.message('$code', name: '$key', args: [${args.join(", ")}], desc: '$description')""";
   }
 
   String _getMessageCode(Message message) {
@@ -201,10 +198,6 @@ class ArbToDartGenerator {
 
     if (message is LiteralString) {
       return message.string;
-    }
-
-    if (message is CustomVariableSubstitution) {
-      return '\$${message.variableName}';
     }
 
     if (message is Plural) {}
@@ -267,13 +260,13 @@ String? _escapeString(String? string) {
     } else if (c >= _ASCII_START && c <= _ASCII_END) {
       switch (c) {
         case 34:
-          sb.write('\\\"');
+          sb.write('\\"');
           break;
         case 36:
           sb.write('\\\$');
           break;
         case 39:
-          sb.write("\\\'");
+          sb.write("\\'");
           break;
         case 92:
           sb.write('\\\\');

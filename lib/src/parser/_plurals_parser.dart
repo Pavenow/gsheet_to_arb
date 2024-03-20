@@ -123,7 +123,7 @@ class PluralsParser {
 
   Completed _getCompleted({bool consumed = false}) {
     final formattedKey = addContextPrefix && _resource!.context.isNotEmpty
-        ? ReCase(_resource!.context + '_' + _key!).camelCase
+        ? ReCase('${_resource!.context}_${_key!}').camelCase
         : ReCase(_key!).camelCase;
 
     return Completed(

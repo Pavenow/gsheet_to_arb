@@ -1,7 +1,5 @@
 import 'package:code_builder/code_builder.dart';
 
-import '../arb/arb.dart';
-
 ClassBuilder langTemplates(ClassBuilder builder, String className) {
   builder.name = className;
   builder.docs.add("""\n\n
@@ -154,14 +152,6 @@ ClassBuilder delegateTemplates(
                 .trim()),
         )
       ]);
-
-List<String> getLocaleList(List<ArbDocument> documents) {
-  List<String> locales = [];
-  documents.forEach((document) {
-    locales.add(document.locale ?? "");
-  });
-  return locales;
-}
 
 String _generateLocale(String locale) {
   var parts = locale.split('_');

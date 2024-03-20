@@ -48,14 +48,14 @@ class PluginConfigManager {
           categoryPrefix: '# ',
           sheetId: '0',
           documentId: '<ADD_DOCUMENT_ID_HERE>',
-          authFile: './' + authFileName,
+          authFile: './$authFileName',
           sheetColumns: SheetColumns(),
           sheetRows: SheetRows(),
         ),
       );
 
       final root = PluginConfigRoot(config).toJson();
-      final yamlString = '\n' + YamlUtils.toYamlString(root);
+      final yamlString = '\n${YamlUtils.toYamlString(root)}';
 
       FileUtils.append(configFileName, yamlString);
 

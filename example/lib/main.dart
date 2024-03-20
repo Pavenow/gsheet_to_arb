@@ -7,7 +7,7 @@ void main() async {
   print('MAIN');
 
   Intl.defaultLocale = 'id';
-  await initializeMessages(Intl.defaultLocale);
+  await initializeMessages(Intl.defaultLocale ?? "en");
 
   final l10n = ExampleLang();
 

@@ -26,8 +26,9 @@ class ArbSerializer {
     var targetDir = Directory(directory);
     targetDir.createSync(recursive: true);
 
-    bundle.documents
-        .forEach((document) => _saveArbDocument(document, targetDir));
+    for (var document in bundle.documents) {
+      _saveArbDocument(document, targetDir);
+    }
   }
 
   ArbDocument loadArbDocument(String filePath) {

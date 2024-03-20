@@ -17,21 +17,21 @@ class ArbDocument {
     json['@@locale'] = locale!;
     json['@@last_modified'] = lastModified!.toIso8601String();
 
-    entries!.forEach((ArbResource resource) {
+    for (var resource in entries!) {
       json[resource.key] = resource.value;
       if (resource.attributes.isNotEmpty && !compact) {
         json['@${resource.key}'] = resource.attributes;
       }
-    });
+    }
 
     return json;
   }
 
-  ArbDocument.fromJson(Map<String, dynamic> _json) {
+  ArbDocument.fromJson(Map<String, dynamic> json) {
     var entriesMap = <String, ArbResource>{};
     entries = <ArbResource>[];
 
-    _json.forEach((key, value) {
+    json.forEach((key, value) {
       if ('@@locale' == key) {
         locale = value;
       } else if ('@@last_modified' == key) {
@@ -56,10 +56,10 @@ class ArbResource {
   final String description;
   final String context;
 
-  ArbResource(String key, String value,
-      {this.description = '', this.context = '', this.placeholders = const []})
-      : key = key,
-        value = value {
+  ArbResource(this.key, this.value,
+      {this.description = '',
+      this.context = '',
+      this.placeholders = const []}) {
     // Possible values are "text", "image", "css"
     attributes['type'] = 'Text';
 
@@ -80,13 +80,13 @@ class ArbResource {
       List<ArbResourcePlaceholder> placeholders) {
     final map = <String, Object?>{};
 
-    placeholders.forEach((placeholder) {
+    for (var placeholder in placeholders) {
       final placeholderArgs = <String, Object>{};
       if (placeholder.type != null) {
         placeholderArgs['type'] = placeholder.type!;
       }
       map[placeholder.name!] = placeholderArgs;
-    });
+    }
     return map;
   }
 }

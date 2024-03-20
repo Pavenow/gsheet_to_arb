@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, constant_identifier_names, non_constant_identifier_names
 
 /*
  * Copyright (c) 2024, Rahmatur Ramadhan

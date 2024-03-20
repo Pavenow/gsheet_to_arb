@@ -34,7 +34,7 @@ class TranslationParser {
     for (var item in document.items) {
       // for each language
       for (var index in iterables.range(0, document.languages.length)) {
-        var itemValue;
+        String itemValue;
         //incase value does not exist
         if (index < item.values.length) {
           itemValue = item.values[index as int];
@@ -43,10 +43,8 @@ class TranslationParser {
         }
 
         if (itemValue == '') {
-          Log.i('WARNING: empty string in lang: ' +
-              document.languages[index as int] +
-              ', key: ' +
-              item.key);
+          Log.i(
+              'WARNING: empty string in lang: ${document.languages[index as int]}, key: ${item.key}');
         }
 
         final itemPlaceholders = _findPlaceholders(itemValue);
@@ -74,7 +72,7 @@ class TranslationParser {
         }
 
         final key = addContextPrefix && item.category.isNotEmpty
-            ? ReCase(item.category + '_' + item.key).camelCase
+            ? ReCase('${item.category}_${item.key}').camelCase
             : ReCase(item.key).camelCase;
 
         // add resource
@@ -97,7 +95,10 @@ class TranslationParser {
 
     // build all documents
     var documents = <ArbDocument>[];
-    builders.forEach((builder) => documents.add(builder.build()));
+    for (var builder in builders) {
+      documents.add(builder.build());
+    }
+
     return ArbBundle(documents);
   }
 
@@ -110,7 +111,7 @@ class TranslationParser {
 
     var matches = _placeholderRegex.allMatches(text);
     var placeholders = <String, ArbResourcePlaceholder>{};
-    matches.forEach((Match match) {
+    for (var match in matches) {
       var group = match.group(0);
       var placeholderName = group!.substring(1, group.length - 1);
 
@@ -119,7 +120,7 @@ class TranslationParser {
       }
       placeholders[placeholderName] =
           (ArbResourcePlaceholder(name: placeholderName, type: 'text'));
-    });
+    }
     return placeholders.values.toList();
   }
 }
