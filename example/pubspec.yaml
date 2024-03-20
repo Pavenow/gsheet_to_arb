@@ -1,0 +1,29 @@
+name: gsheet_to_arb_example
+description: Example of how to use ghseet_to_arb plugin
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  intl: ^0.18.1
+  intl_translation: ^0.18.2
+  intl_utils: ^2.8.4
+
+dev_dependencies:
+  gsheet_to_arb:
+    path: ../
+  test: ^1.25.2
+  mockito: ^5.4.4 
+  
+gsheet_to_arb: 
+  arb_file_prefix: 'intl'
+  localization_file_name: 'l10n'
+  arb_dir: lib/l10n
+  output_dir: lib/generated
+  generate_code: true
+  add_context_prefix: false
+  gsheet: 
+    auth_file: './gsheet_to_arb.yaml'
+    category_prefix: "# "
+    document_id: '15umdtiw2rdUEon5YEh473oG0q51B614S9bDpwDFjOUk'
+    sheet_id: '0'
