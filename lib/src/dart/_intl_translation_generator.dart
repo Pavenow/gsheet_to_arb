@@ -114,18 +114,11 @@ class IntlTranslationGenerator {
 /// up its original messages in our [messages].class
 
 class BasicTranslatedMessage extends TranslatedMessage {
-  String name;
   Map<String, List<MainMessage>> messages;
 
-  BasicTranslatedMessage(this.name, translated, this.messages)
-      : super(name, translated, messages[name] ?? []);
+  BasicTranslatedMessage(String name, translated, this.messages)
+      : super(name, translated, []);
 
   @override
-  List<MainMessage> get originalMessages => (super.originalMessages.isEmpty)
-      ? _findOriginals()
-      : super.originalMessages;
-
-  // We know that our [id] is the name of the message, which is used as the
-  //key in [messages].
-  List<MainMessage> _findOriginals() => messages[id] ?? originalMessages;
+  List<MainMessage> get originalMessages => super.originalMessages;
 }
