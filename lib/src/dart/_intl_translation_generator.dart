@@ -118,7 +118,7 @@ class BasicTranslatedMessage extends TranslatedMessage {
   Map<String, List<MainMessage>> messages;
 
   BasicTranslatedMessage(this.name, translated, this.messages)
-      : super(name, translated, messages[name]!);
+      : super(name, translated, messages[name] ?? []);
 
   @override
   List<MainMessage> get originalMessages => (super.originalMessages.isEmpty)
