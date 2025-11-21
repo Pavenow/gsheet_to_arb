@@ -8,14 +8,14 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.20.2
-  intl_translation: ^0.20.1
-  intl_utils: ^2.8.4
+  intl_translation: ^0.21.0
+  intl_utils: ^2.8.12
 
 dev_dependencies:
   gsheet_to_arb:
     path: ../
-  test: ^1.25.2
-  mockito: ^5.4.4
+  test: ^1.28.0
+  mockito: ^5.5.1
 
 gsheet_to_arb:
   arb_file_prefix: "intl"
