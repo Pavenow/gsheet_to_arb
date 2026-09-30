@@ -1,0 +1,28 @@
+name: AI Code Review
+
+on:
+  # pull_request (NOT pull_request_target): the reusable workflow checks out
+  # and executes PR-authored code with secrets in scope. On pull_request,
+  # fork PRs run without secrets, so a fork PR here is skipped, not exposed.
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  ai-review:
+    uses: Pavenow/workflows/.github/workflows/ai-code-review.yml@v3.6.0
+    with:
+      APP_CLIENT_ID: ${{ vars.GH_APP_CLIENT_ID }}
+      JIRA_PROJECT_KEYS: "PAVE"
+      # Org design docs (HLDs/LLDs); the reviewer checks the diff against them.
+      DOCS_REPO: "documentation"
+    secrets:
+      APP_PRIVATE_KEY: ${{ secrets.GH_APP_PRIVATE_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ATLASSIAN_USERNAME: ${{ secrets.CONFLUENCE_USERNAME }}
+      ATLASSIAN_API_TOKEN: ${{ secrets.CONFLUENCE_API_TOKEN }}
